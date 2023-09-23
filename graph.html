@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Charts</title>
+    <style>
+        /* Style the buttons */
+        .chart-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for buttons */
+        .chart-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Align buttons to the right */
+        .button-container {
+            text-align: right;
+        }
+
+        /* Style the chart container */
+        .chart-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Container for the chart -->
+<div class="chart-container">
+    <!-- Canvas to display the chart -->
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+</div>
+
+<!-- Container for buttons, aligned to the right -->
+<div class="button-container">
+    <button id="ageChartButton" class="chart-button">Age Group Bar Chart</button>
+    <button id="divisionChartButton" class="chart-button">Division Pie Chart</button>
+    <button id="genderChartButton" class="chart-button">Gender Pie Chart</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    // Define barColors
+    var barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145"
+    ];
+
+    // Function to create a new Chart instance for a bar chart
+    function createBarChart(labels, data, title) {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        return new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: data
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: title
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    // Function to create a new Chart instance for a pie chart
+    function createPieChart(labels, data, title) {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        return new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: data
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        });
+    }
+
+    // Sample data for Age Group Bar Chart
+    var ageLabels = ["5-8", "8-11", "11-14", "14-18"];
+    var ageData = [30, 45, 20, 5];
+    var ageTitle = "Age Group Distribution (Bar Chart)";
+
+    // Sample data for Division Pie Chart
+    var divisionLabels = ["SC", "ST", "General", "OBC"];
+    var divisionData = [15, 10, 50, 25];
+    var divisionTitle = "Division Distribution (Pie Chart)";
+
+    // Sample data for Gender Pie Chart
+    var genderLabels = ["Male", "Female"];
+    var genderData = [60, 40];
+    var genderTitle = "Gender Distribution (Pie Chart)";
+
+    // Initial chart (Age Group Bar Chart)
+    var currentChart = createBarChart(ageLabels, ageData, ageTitle);
+
+    // Function to display Age Group Bar Chart
+    function showAgeChart() {
+        currentChart.destroy(); // Destroy the current chart instance
+        currentChart = createBarChart(ageLabels, ageData, ageTitle);
+    }
+
+    // Function to display Division Pie Chart
+    function showDivisionChart() {
+        currentChart.destroy(); // Destroy the current chart instance
+        currentChart = createPieChart(divisionLabels, divisionData, divisionTitle);
+    }
+
+    // Function to display Gender Pie Chart
+    function showGenderChart() {
+        currentChart.destroy(); // Destroy the current chart instance
+        currentChart = createPieChart(genderLabels, genderData, genderTitle);
+    }
+
+    // Attach click event handlers to the buttons
+    document.getElementById("ageChartButton").onclick = showAgeChart;
+    document.getElementById("divisionChartButton").onclick = showDivisionChart;
+    document.getElementById("genderChartButton").onclick = showGenderChart;
+</script>
+</body>
+</html>
